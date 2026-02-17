@@ -4,7 +4,12 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
-  workflow_dispatch: # Allows manual trigger from GitHub UI
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   test:
@@ -27,13 +32,27 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-      - name: Print Report URL
+      - name: Upload Pages artifact
         if: ${{ !cancelled() }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: playwright-report/
+
+  deploy:
+    needs: test
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Print Report URL
         run: |
           echo "============================================"
           echo "📊 Playwright Test Report"
           echo "============================================"
-          echo ""
           echo "${{ steps.deployment.outputs.page_url }}"
-          echo ""
           echo "============================================"
