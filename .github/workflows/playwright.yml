@@ -34,6 +34,6 @@ jobs:
           echo "📊 Playwright Test Report"
           echo "============================================"
           echo ""
-          echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "${{ steps.deployment.outputs.page_url }}"
           echo ""
           echo "============================================"
