@@ -144,9 +144,6 @@ Tests run automatically on:
 - Pull requests to `main` or `master` branch
 - Manual trigger via GitHub Actions UI
 
-**View CI/CD Status:**  
-![Playwright Tests](https://github.com/akvakola/vercel-loc/actions/workflows/playwright.yml/badge.svg)
-
 **View Latest Test Report:**  
 [GitHub Pages Test Report](https://akvakola.github.io/vercel-loc/)
 
